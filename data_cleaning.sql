@@ -20,4 +20,8 @@ select TransactionID, count(*) as row_count
 -- deleting the sales_transaction table
 
 drop table if exists sales_transaction;
+
+-- changing the name of temp table
+alter table sales_transaction_temp
+rename sales_transaction ;
  
