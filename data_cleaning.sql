@@ -25,3 +25,14 @@ drop table if exists sales_transaction;
 alter table sales_transaction_temp
 rename sales_transaction ;
  
+-- checking the number of rows
+select count(*) from sales_transaction;
+
+-- finding the difference between the sales_transaction Price and product_inventory Price
+
+select st.TransactionID, st.ProductID,pi.ProductName, st.Price as tran_price,pi.Price as product_inventory_price
+from sales_transaction as st
+inner join 
+product_inventory pi
+on st.ProductID=pi.ProductID
+where st.Price<>pi.Price;
