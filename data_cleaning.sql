@@ -36,3 +36,12 @@ inner join
 product_inventory pi
 on st.ProductID=pi.ProductID
 where st.Price<>pi.Price;
+
+savepoint error_find;
+
+-- updating the tran_price discrepancies
+update sales_transaction as st
+set st.Price=(select pi.Price from product_inventory pi where pi.ProductID=st.ProductID)
+where st.ProductID in 
+(select pi.ProductID from product_inventory pi where st.Price <> pi.Price)
+
