@@ -61,3 +61,7 @@ Location='Unknown'
 where Location= '';
 
 -- updating the datatype of the Joindate column
+alter table customer
+modify JoinDate date;
+
+desc customer;
