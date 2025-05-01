@@ -62,7 +62,7 @@ where Location= '';
 
 -- updating the datatype of the Joindate column
 alter table customer
-modify JoinDate date;
+modify column JoinDate date;
 
 desc customer;
 
@@ -71,3 +71,11 @@ desc customer;
 select * from product_inventory;
 
 -- checking the missing values
+
+select *
+from product_inventory
+where StockLevel='';
+
+alter table product_inventory
+modify column StockLevel int;
+
