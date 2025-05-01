@@ -59,3 +59,5 @@ update customer
 set
 Location='Unknown'
 where Location= '';
+
+-- updating the datatype of the Joindate column
