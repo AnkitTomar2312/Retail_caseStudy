@@ -43,5 +43,14 @@ savepoint error_find;
 update sales_transaction as st
 set st.Price=(select pi.Price from product_inventory pi where pi.ProductID=st.ProductID)
 where st.ProductID in 
-(select pi.ProductID from product_inventory pi where st.Price <> pi.Price)
+(select pi.ProductID from product_inventory pi where st.Price <> pi.Price);
 
+-- Identifying the null vlaues
+select count(*)
+from customer
+where Location='';
+
+select *
+from customer;
+
+-- replacing the empty string in location to 'Unknown'
