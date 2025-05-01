@@ -54,3 +54,8 @@ select *
 from customer;
 
 -- replacing the empty string in location to 'Unknown'
+
+update customer
+set
+Location='Unknown'
+where Location= '';
