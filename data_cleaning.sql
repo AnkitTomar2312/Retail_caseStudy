@@ -65,3 +65,9 @@ alter table customer
 modify JoinDate date;
 
 desc customer;
+
+-- checking the product_inventory
+
+select * from product_inventory;
+
+-- checking the missing values
