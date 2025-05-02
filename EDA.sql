@@ -105,8 +105,14 @@ where tentile<=2;
 alter table sales_transaction
 modify TransactionDate date;
 
+with rev as (
 select 
-*
+year(TransactionDate) as year,
+round(sum(QuantityPurchased*Price),2) as annual_revenue,
+lag(round(sum(QuantityPurchased*Price),2)) over() as prev_year_revenue
 from 
-sales_transaction;
-
+sales_transaction
+group by year(TransactionDate))
+select *,
+concat(round((annual_revenue-prev_year_revenue)*100/prev_year_revenue,2),' %') as percentage
+from rev;
