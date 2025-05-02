@@ -68,3 +68,25 @@ where QuantityPurchased>=1
 order by QuantityPurchased
 limit 10;
 
+-- Get the top 5 products from each category in terms of revenue generated
+-- Write an SQL query to get top 5 performing products from each category by revenue
+
+with temp as (
+select
+s.ProductID,
+p.Category,
+s.QuantityPurchased,
+s.Price,
+round((s.QuantityPurchased*s.Price),2) as sales
+from 
+product_inventory p
+inner join
+sales_transaction s
+on p.ProductID=s.ProductID),
+ranked as (
+select 
+*,
+row_number() over(partition by Category order by sales desc) as product_rank
+from temp)
+select * from ranked
+where product_rank<=5;
