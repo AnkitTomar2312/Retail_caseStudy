@@ -168,3 +168,30 @@ sales_transaction
 group by CustomerID
 having number_of_transaction>10 and total_amount_spent>1000
 order by total_amount_spent desc;
+
+
+-- Occasional Customers - Low Purchase Frequency
+-- Write a SQL query that describes the number of transaction along with the total amount spent by each customer, 
+-- which will help us understand the customers who are occasional customers in the company.
+
+select CustomerID,count(*) as number_of_transaction,round(sum(QuantityPurchased*Price),2) 
+as total_amount_spent from 
+sales_transaction
+group by CustomerID
+having number_of_transaction<10 and total_amount_spent<1000
+order by total_amount_spent;
+
+
+-- Repeat Purchase Patterns
+-- Write a SQL query that describes the total number of purchases made by each customer against each productID 
+-- to understand the repeat customers in the company.
+
+
+-- Loyalty Indicators
+-- Write a SQL query that describes the duration between the first and the last purchase of the customer 
+-- in that particular company to understand the loyalty of the customer.
+
+
+-- Customer Segmentation based on quantity purchased
+-- Write a SQL query that segments customers based on the total quantity of products they have purchased. 
+-- Also, count the number of customers in each segment. 
