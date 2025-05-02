@@ -52,3 +52,19 @@ group by ProductName
 order by total_sales desc
 limit 10;
 
+-- Low Sales Products
+-- Write a SQL query to find the ten products with the least amount of units sold from the sales transactions, 
+-- provided that atleast one unit was sold for those products.
+
+select 
+distinct p.ProductID,
+s.QuantityPurchased
+from 
+product_inventory p
+inner join
+sales_transaction s
+on p.ProductID=s.ProductID
+where QuantityPurchased>=1
+order by QuantityPurchased
+limit 10;
+
