@@ -34,3 +34,21 @@ sales_transaction s
 on p.ProductID=s.ProductID
 group by Category
 order by total_sales desc;
+
+-- High Sales Products
+-- Write a SQL query to find the top 10 products with the highest total sales revenue from the sales transactions. 
+-- This will help the company to identify the High sales products which needs to be focused to increase the revenue 
+-- of the company.
+
+select 
+ProductName,
+concat('$ ',round(sum(s.Price*s.QuantityPurchased),2)) as total_sales
+from 
+product_inventory p
+inner join
+sales_transaction s
+on p.ProductID=s.ProductID
+group by ProductName
+order by total_sales desc
+limit 10;
+
