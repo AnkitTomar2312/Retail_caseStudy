@@ -136,3 +136,22 @@ order by year)
 select *,
 round((monthly_revenue-prev_monthly_revenue)*100/prev_monthly_revenue,2) as percentage
 from temp;
+
+-- do same for the quantity purchased
+
+
+select 
+*
+from sales_transaction;
+with temp as (
+select 
+year(TransactionDate) as year,
+month(TransactionDate) as month,
+sum(QuantityPurchased) as monthly_orders,
+lag(sum(QuantityPurchased)) over(partition by year(TransactionDate)) as prev_monthly_orders
+from sales_transaction
+group by year,month
+order by year)
+select *,
+round((monthly_orders-prev_monthly_orders)*100/prev_monthly_orders,2) as percentage
+from temp;
