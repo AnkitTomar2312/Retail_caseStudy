@@ -116,3 +116,23 @@ group by year(TransactionDate))
 select *,
 concat(round((annual_revenue-prev_year_revenue)*100/prev_year_revenue,2),' %') as percentage
 from rev;
+
+-- Growth rate of sales M-o_M
+-- Write a SQL query to understand the month on month growth rate of sales of the company which will help 
+-- understand the growth trend of the company.
+
+select 
+*
+from sales_transaction;
+with temp as (
+select 
+year(TransactionDate) as year,
+month(TransactionDate) as month,
+round(sum(QuantityPurchased*Price),2) as monthly_revenue,
+lag(round(sum(QuantityPurchased*Price),2)) over(partition by year(TransactionDate)) as prev_monthly_revenue
+from sales_transaction
+group by year,month
+order by year)
+select *,
+round((monthly_revenue-prev_monthly_revenue)*100/prev_monthly_revenue,2) as percentage
+from temp;
