@@ -90,3 +90,11 @@ row_number() over(partition by Category order by sales desc) as product_rank
 from temp)
 select * from ranked
 where product_rank<=5;
+
+-- Get top 20 percent most ordered products from the entire data.
+with temp as (select 
+*,
+ntile(10) over(order by QuantityPurchased desc) as tentile
+from sales_transaction)
+select * from temp 
+where tentile<=2;
