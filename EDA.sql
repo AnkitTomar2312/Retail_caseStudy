@@ -155,3 +155,16 @@ order by year)
 select *,
 round((monthly_orders-prev_monthly_orders)*100/prev_monthly_orders,2) as percentage
 from temp;
+
+-- Customers - High Purchase Frequency and Revenue
+-- Write a SQL query that describes the number of transaction along with the total amount spent by each 
+-- customer which are on the higher side and will help us understand the customers who are the high frequency 
+-- purchase customers in the company.
+
+
+select CustomerID,count(*) as number_of_transaction,round(sum(QuantityPurchased*Price),2) 
+as total_amount_spent from 
+sales_transaction
+group by CustomerID
+having number_of_transaction>10 and total_amount_spent>1000
+order by total_amount_spent desc;
