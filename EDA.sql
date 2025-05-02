@@ -98,3 +98,15 @@ ntile(10) over(order by QuantityPurchased desc) as tentile
 from sales_transaction)
 select * from temp 
 where tentile<=2;
+
+-- Sales Trends
+-- Write a SQL query to identify the sales trend to understand the revenue pattern of the company.
+
+alter table sales_transaction
+modify TransactionDate date;
+
+select 
+*
+from 
+sales_transaction;
+
