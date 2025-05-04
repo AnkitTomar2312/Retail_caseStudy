@@ -205,6 +205,20 @@ order by total_orders desc;
 -- Loyalty Indicators
 -- Write a SQL query that describes the duration between the first and the last purchase of the customer 
 -- in that particular company to understand the loyalty of the customer.
+select * from sales_transaction;
+
+with temp as (
+select
+distinct CustomerID,
+min(TransactionDate) over( partition by CustomerID order by CustomerID) as first_purchase,
+max(TransactionDate) over( partition by CustomerID order by CustomerID) as last_purchase
+from sales_transaction
+)
+select *,
+concat(DATEDIFF(last_purchase,first_purchase),' days') as loyality
+from temp 
+where DATEDIFF(last_purchase,first_purchase)>1
+order by loyality desc;
 
 
 -- Customer Segmentation based on quantity purchased
