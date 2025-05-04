@@ -181,10 +181,25 @@ group by CustomerID
 having number_of_transaction<10 and total_amount_spent<1000
 order by total_amount_spent;
 
-
 -- Repeat Purchase Patterns
 -- Write a SQL query that describes the total number of purchases made by each customer against each productID 
 -- to understand the repeat customers in the company.
+
+
+select * from sales_transaction
+where CustomerID=1 and ProductID=2;
+with temp as (
+select 
+CustomerID,
+ProductID,
+sum(QuantityPurchased) over(partition by CustomerID,ProductID order by CustomerID) as total_purchases
+from sales_transaction
+) select
+*,
+sum(total_purchases) over (partition by CustomerId order by CustomerID) as total_orders
+from
+temp
+order by total_orders desc;
 
 
 -- Loyalty Indicators
