@@ -224,3 +224,21 @@ order by loyality desc;
 -- Customer Segmentation based on quantity purchased
 -- Write a SQL query that segments customers based on the total quantity of products they have purchased. 
 -- Also, count the number of customers in each segment. 
+
+with temp as (
+select 
+CustomerID,
+ProductID,
+sum(QuantityPurchased) over(partition by CustomerID,ProductID order by CustomerID) as total_purchases
+from sales_transaction
+) select
+CustomerID,
+sum(total_purchases) over (partition by CustomerId order by CustomerID) as total_orders,
+case
+when sum(total_purchases) over (partition by CustomerId order by CustomerID)<=10 then 'low'
+when sum(total_purchases) over (partition by CustomerId order by CustomerID)<=30 then 'mid'
+else 'high'
+end as category
+from
+temp
+order by total_orders desc;
